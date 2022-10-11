@@ -5,11 +5,7 @@ from graphnet.pisa.plotting import plot_2D_contour, plot_1D_contour
 # Here we would like to plot two contours in one figure; one for our GNN and one for retro.
 # We build a dictionary  for each contour. Each dictionary much contain "path" and "model".
 # "path" is the path to the .csv file containing the fit result.
-# "model" is the name of the model in the .csv file - some fits have more than 1 model!
-# The plotting script returns the figure object - remember to save it yourself!
-
-contour_data_2D = []
-contour_data_2D.append(
+# "model" i
     {
         "path": "/mnt/scratch/rasmus_orsoe/oscillation/30x30_std_config_final_num_bins_15_lbe_0.4_hbe_0.8/merged_results.csv",
         "model": "dynedge",
