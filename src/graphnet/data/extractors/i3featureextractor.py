@@ -68,6 +68,7 @@ class I3FeatureExtractorIceCube86(I3FeatureExtractor):
             "width": [],
             "pmt_area": [],
             "rde": [],
+            "event_time":[],
         }
 
         # Get OM data
@@ -78,6 +79,7 @@ class I3FeatureExtractorIceCube86(I3FeatureExtractor):
             x = self._gcd_dict[om_key].position.x
             y = self._gcd_dict[om_key].position.y
             z = self._gcd_dict[om_key].position.z
+            event_time = frame["I3EventHeader"].start_time.mod_julian_day_double
             area = self._gcd_dict[om_key].area
             rde = self._get_relative_dom_efficiency(frame, om_key)
 
@@ -92,7 +94,7 @@ class I3FeatureExtractorIceCube86(I3FeatureExtractor):
                 output["dom_x"].append(x)
                 output["dom_y"].append(y)
                 output["dom_z"].append(z)
-
+                output["event_time"].append(event_time)
         return output
 
     def _get_relative_dom_efficiency(self, frame, om_key):

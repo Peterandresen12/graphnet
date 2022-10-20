@@ -10,6 +10,7 @@ from graphnet.data.extractors import (
     I3FeatureExtractorIceCubeUpgrade,
     I3RetroExtractor,
     I3TruthExtractor,
+    I3SplineMPEICExtractor,
 )
 from graphnet.data.sqlite.sqlite_dataconverter import SQLiteDataConverter
 
@@ -19,23 +20,23 @@ logger = get_logger(level=logging.DEBUG)
 def main_icecube86():
     """Main script function."""
     paths = [
-        "/groups/icecube/asogaard/data/i3/i3_to_sqlite_workshop_test/level7_v02.00"
+        "/data/user/sschindler/zeuthenCluster_moonL4_exp13_01/"
     ]
-    pulsemap = "SRTInIcePulses"
-    gcd_rescue = "resources/GeoCalibDetectorStatus_AVG_55697-57531_PASS2_SPE_withScaledNoise.i3.gz"
-    outdir = "/groups/icecube/asogaard/temp/sqlite_test_ic86"
+    pulsemap = "TWSRTHVInIcePulses"
+    gcd_rescue = None
+    outdir = "/data/user/pa000/MoonPointing/sschindler_data_with_reco_and_new_pulsemap"
 
     converter = SQLiteDataConverter(
         [
             I3TruthExtractor(),
-            I3RetroExtractor(),
+            I3SplineMPEICExtractor(),
             I3FeatureExtractorIceCube86(pulsemap),
         ],
         outdir,
         gcd_rescue,
     )
     converter(paths)
-
+    converter.merge_files('/data/user/pa000/MoonPointing/sschindler_data_with_reco_and_new_pulsemap/Merged_database/moonL4_segspline_exp13_01_merged_with_time_and_reco_and_new_pulsemap.db')
 
 def main_icecube_upgrade():
     """Main script function."""
@@ -70,5 +71,5 @@ def main_icecube_upgrade():
 
 
 if __name__ == "__main__":
-    # main_icecube86()
-    main_icecube_upgrade()
+    main_icecube86()
+    #main_icecube_upgrade()
