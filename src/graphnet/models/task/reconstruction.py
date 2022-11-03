@@ -3,7 +3,7 @@ import torch
 
 from graphnet.models.task import Task
 from graphnet.utilities.maths import eps_like
-
+from torch.nn.functional import softmax
 
 class AzimuthReconstructionWithKappa(Task):
     """Reconstructs azimuthal angle and associated kappa (1/var)."""
@@ -167,6 +167,13 @@ class TimeReconstruction(Task):
         # Leave as it is
         return x
 
+class MulticlassClassificationTask(Task):
+    # requires three features: probability of being noise, muon or neutrino.
+    nb_inputs = 3
+
+    def _forward(self, x):
+        # transform probability of being noise, muon or neutrino
+        return softmax(x)
 
 class BinaryClassificationTask(Task):
     # requires one feature: probability of being neutrino?

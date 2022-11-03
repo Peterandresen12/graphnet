@@ -20,6 +20,13 @@ import scipy.special
 import torch
 from torch import Tensor
 
+from torch.nn.functional import (
+    one_hot,
+    cross_entropy,
+    binary_cross_entropy,
+    softplus,
+)
+
 from graphnet.models.config import save_config
 from graphnet.models.model import Model
 
@@ -110,6 +117,19 @@ class LogCoshLoss(LossFunction):
         elements = self._log_cosh(diff)
         return elements
 
+class CrossEntropyLoss(LossFunction):
+    """Compute cross entropy loss.
+    Predictions are an [N, num_class]-matrix of values between 0 and 1, and
+    targets are an [N,1]-matrix with integer values in (0, num_classes - 1).
+    """
+
+    def _forward(self, prediction: Tensor, target: Tensor) -> Tensor:
+        device = prediction.device
+        pid_transform = {1:0,12:2,13:1,14:2,16:2}
+        target_new = one_hot(torch.tensor([pid_transform[np.abs(int(value))] for value in target]), 3).to(device)
+        return cross_entropy(
+            prediction.float(), target_new.float(), reduction="none"
+        )
 
 class BinaryCrossEntropyLoss(LossFunction):
     """Computes binary cross entropy for a vector of predictions (between 0 and 1),
