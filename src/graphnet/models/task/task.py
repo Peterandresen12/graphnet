@@ -160,9 +160,10 @@ class Task(Model):
             (transform_prediction_and_target is not None)
             and (transform_target is not None)
         ), "Please specify at most one of `transform_prediction_and_target` and `transform_target`"
-        assert (transform_target is not None) == (
+        if (transform_target is not None) != (
             transform_inference is not None
-        ), "Please specify both `transform_inference` and `transform_target`"
+        ): 
+            self.warning("We expect both `transform_target` and `transform_inference` to be specified") 
 
         if transform_target is not None:
             if transform_support is not None:
@@ -194,6 +195,9 @@ class Task(Model):
                 transform_prediction_and_target
             )
             self._transform_target = transform_prediction_and_target
-        elif transform_target is not None:
-            self._transform_prediction_inference = transform_inference
-            self._transform_target = transform_target
+        else:
+            if transform_target is not None:
+                self._transform_target = transform_target
+            if transform_inference is not None:
+                self._transform_prediction_inference = transform_inference
+

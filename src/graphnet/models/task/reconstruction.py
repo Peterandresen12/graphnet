@@ -173,7 +173,7 @@ class MulticlassClassificationTask(Task):
 
     def _forward(self, x):
         # transform probability of being noise, muon or neutrino
-        return softmax(x)
+        return x#softmax(x)
 
 class BinaryClassificationTask(Task):
     # requires one feature: probability of being neutrino?
