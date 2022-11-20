@@ -9,24 +9,18 @@ if TYPE_CHECKING:
 
 
 class I3PISAExtractor(I3Extractor):
-    """Class for extracting quantities required by PISA."""
-
-    def __init__(self, name: str = "pisa_dependencies"):
-        """Construct `I3PISAExtractor`."""
-        # Base class constructor
+    def __init__(self, name="pisa_dependencies"):
         super().__init__(name)
 
-    def __call__(
-        self, frame: "icetray.I3Frame", padding_value: float = -1.0
-    ) -> Dict[str, Any]:
-        """Extract quantities required by PISA."""
+    def __call__(self, frame, padding_value=-1) -> dict:
+        """Extracts quantities required by PISA"""
         output = {}
-        required_keys = ["OneWeight", "gen_ratio", "NEvents", "GENIEWeight"]
+        required_keys = ['OneWeight', 'gen_ratio', 'NEvents', 'GENIEWeight', 'weight']
         if "I3MCWeightDict" in frame:
             for key in required_keys:
                 try:
-                    output.update({key: frame["I3MCWeightDict"][key]})
-                except KeyError:
-                    output.update({key: padding_value})
+                    output.update({key : frame['I3MCWeightDict'][key]})
+                except KeyError as e:
+                    output.update({key : padding_value})
 
         return output
