@@ -284,5 +284,7 @@ def is_pulsemap_check(table_name: str) -> bool:
     """Check whether `table_name` corresponds to a pulsemap."""
     if "pulse" in table_name.lower():
         return True
+    elif "series" in table_name.lower():
+        return True
     else:
         return False
