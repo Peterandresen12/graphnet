@@ -11,6 +11,48 @@ from graphnet.models.components.pool import (
 from graphnet.data.constants import FEATURES
 from graphnet.models.detector.detector import Detector
 
+import pickle
+
+class IceCube_scaler(Detector):
+    """`Detector` class for IceCube-86."""
+
+    # Implementing abstract class attribute
+    features = FEATURES.ICECUBE86
+
+    @save_config
+    def __init__(
+        self,scaler:str, graph_builder: GraphBuilder, scalers: List[dict] = None
+    ):
+        # Base class constructor
+        super().__init__(graph_builder,scalers)
+        
+        self._scaler = pickle.load(open(scaler, 'rb'))
+
+    def _forward(self, data: Data) -> Data:
+        """Ingests data, builds graph (connectivity/adjacency), and preprocesses features.
+
+        Args:
+            data (Data): Input graph data.
+
+        Returns:
+            Data: Connected and preprocessed graph data.
+        """
+
+        # Check(s)
+        self._validate_features(data)
+
+        # Preprocessing
+        x_numpy = data.x.detach().cpu().numpy()
+
+        data.x[:, :5] = torch.tensor(
+            self._scaler.transform(x_numpy[:, :5])
+        ).type_as(data.x)
+
+        data.x[:, 5] -= 1.25  # rde
+        data.x[:, 5] /= 0.25
+        data.x[:, 6] /= 0.05  # pmt_area
+
+        return data
 
 class IceCube86(Detector):
     """`Detector` class for IceCube-86."""
