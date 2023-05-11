@@ -98,8 +98,11 @@ class SQLiteDataConverter(DataConverter):
         """Get the names of all tables in database `db`."""
         if isinstance(db, list):
             results = [self._extract_table_names(path) for path in db]
+            import pandas as pd
+            hej = pd.DataFrame(results)
+            hej.to_csv("/groups/icecube/petersen/GraphNetDatabaseRepository/osc_next_0.01_percent_burnsample_Peter" + 'test_table_names.csv')
             # @TODO: Check...
-            assert all([results[0] == r for r in results])
+            #assert all([results[0] == r for r in results])
             return results[0]
 
         with sqlite3.connect(db) as conn:

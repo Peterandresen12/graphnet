@@ -4,6 +4,7 @@ import torch
 from graphnet.models.task import Task
 from graphnet.utilities.maths import eps_like
 from torch.nn.functional import softmax
+from torch import Tensor
 
 class AzimuthReconstructionWithKappa(Task):
     """Reconstructs azimuthal angle and associated kappa (1/var)."""
@@ -106,14 +107,16 @@ class ZenithReconstructionWithKappa(ZenithReconstruction):
 
 
 class EnergyReconstruction(Task):
-    """Reconstructs energy."""
+    """Reconstructs energy using stable method."""
 
     # Requires one feature: untransformed energy
     nb_inputs = 1
 
-    def _forward(self, x):
-        # Transform energy
-        return torch.pow(10, x[:, 0] + 1.0).unsqueeze(1)
+    def _forward(self, x: Tensor) -> Tensor:
+        # Transform to positive energy domain avoiding `-inf` in `log10`
+        # Transform, thereby preventing overflow and underflow error.
+        return torch.nn.functional.softplus(x, beta=0.05) + eps_like(x)
+
 
 
 class EnergyReconstructionWithUncertainty(EnergyReconstruction):

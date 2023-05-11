@@ -17,6 +17,7 @@ from graphnet.models.graph_builders import KNNGraphBuilder
 from graphnet.models.task.reconstruction import (
     ZenithReconstructionWithKappa,
     AzimuthReconstructionWithKappa,
+    PositionReconstruction,
 )
 from graphnet.training.callbacks import ProgressBar, PiecewiseLinearLR
 from graphnet.training.utils import (

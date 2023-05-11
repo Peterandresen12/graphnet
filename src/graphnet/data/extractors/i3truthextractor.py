@@ -94,6 +94,18 @@ class I3TruthExtractor(I3Extractor):
             "L5_oscNext_bool": padding_value,
             "L6_oscNext_bool": padding_value,
             "L7_oscNext_bool": padding_value,
+            #"NchCleaned": padding_value,
+            #"NoiseEngineNoCharge": padding_value,
+            #"STW9000_DTW300Hits": padding_value,
+            #"DCFiducialHits": padding_value,
+            #"NAbove200Hits": padding_value,
+            #"VertexGuessZ": padding_value,
+            #"CausalVetoHits": padding_value,
+            #"VetoFiducialRatioHits": padding_value,
+            #"C2HR6": padding_value,
+            #"RTVetoCutHit": padding_value,
+            #"UncleanedFullTimeLength": padding_value,
+            #"CleanedFullTimeLength": padding_value,
         }
 
         # Only InIceSplit P frames contain ML appropriate I3RecoPulseSeriesMap etc.
@@ -140,6 +152,20 @@ class I3TruthExtractor(I3Extractor):
 
         if "L7_oscNext_bool" in frame:
             output["L7_oscNext_bool"] = int(bool(frame["L7_oscNext_bool"]))
+
+        # if "IC2018_LE_L3_Vars" in frame:
+        #     output["NchCleaned"] = int(frame["IC2018_LE_L3_Vars"]["NchCleaned"])
+        #     output["NoiseEngineNoCharge"] = int(bool(frame["IC2018_LE_L3_Vars"]["NoiseEngineNoCharge"]))
+        #     output["STW9000_DTW300Hits"] = float(frame["IC2018_LE_L3_Vars"]["STW9000_DTW300Hits"])
+        #     output["DCFiducialHits"] = int(frame["IC2018_LE_L3_Vars"]["DCFiducialHits"])
+        #     output["NAbove200Hits"] = int(frame["IC2018_LE_L3_Vars"]["NAbove200Hits"])
+        #     output["VertexGuessZ"] = float(frame["IC2018_LE_L3_Vars"]["VertexGuessZ"])
+        #     output["CausalVetoHits"] = int(frame["IC2018_LE_L3_Vars"]["CausalVetoHits"])
+        #     output["VetoFiducialRatioHits"] = float(frame["IC2018_LE_L3_Vars"]["VetoFiducialRatioHits"])
+        #     output["C2HR6"] = float(frame["IC2018_LE_L3_Vars"]["C2HR6"])
+        #     output["RTVetoCutHit"] = int(bool(frame["IC2018_LE_L3_Vars"]["RTVetoCutHit"]))
+        #     output["UncleanedFullTimeLength"] = float(frame["IC2018_LE_L3_Vars"]["UncleanedFullTimeLength"])
+        #     output["CleanedFullTimeLength"] = float(frame["IC2018_LE_L3_Vars"]["CleanedFullTimeLength"])
 
         if is_mc and (not is_noise):
             (
