@@ -702,11 +702,11 @@
                 <span class="n">dm31_range</span><span class="o">=</span><span class="n">dm31_range</span><span class="p">,</span>
                 <span class="n">n_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">p</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">settings</span><span class="p">))</span>
-            <span class="n">_</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">map_async</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_parallel_fit_1d_contour</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="n">p</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-            <span class="c1"># self._parallel_fit_1d_contour(settings[0])</span>
+            <span class="c1"># p = multiprocessing.Pool(processes=len(settings))</span>
+            <span class="c1"># _ = p.map_async(self._parallel_fit_1d_contour, settings)</span>
+            <span class="c1"># p.close()</span>
+            <span class="c1"># p.join()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parallel_fit_1d_contour</span><span class="p">(</span><span class="n">settings</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="k">elif</span> <span class="n">contour_type</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"2d"</span><span class="p">:</span>
             <span class="n">settings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_2d_settings</span><span class="p">(</span>
                 <span class="n">cfgs</span><span class="o">=</span><span class="n">cfgs</span><span class="p">,</span>
