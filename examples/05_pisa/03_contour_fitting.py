@@ -22,15 +22,13 @@ def main() -> None:
     }
 
     # Where you want the .csv-file with the results.
-    outdir = "/home/iwsatlas1/oersoe/phd/oscillations/sensitivities"  # @TEMP
+    outdir = "/groups/icecube/peter/workspace/graphnet/examples/05_pisa"  # @TEMP
 
     # What you call your run.
-    run_name = "this_is_a_test_run"
+    run_name = "this_is_a_test_run_Peter"
 
     pipeline_path = (
-        "/mnt/scratch/rasmus_orsoe/databases/oscillations/"
-        "dev_lvl7_robustness_muon_neutrino_0000/pipelines/"
-        "pipeline_oscillation_final/pipeline_oscillation_final.db"
+        "/groups/icecube/peter/workspace/graphnet/examples/05_pisa/peter_pipeline.db"
     )
 
     fitter = ContourFitter(
@@ -38,7 +36,7 @@ def main() -> None:
         pipeline_path=pipeline_path,
         post_fix="_pred",
         model_name="dynedge",
-        include_retro=True,
+        include_retro=False,
         statistical_fit=True,
     )
 
@@ -47,7 +45,7 @@ def main() -> None:
         run_name=run_name + "_1d",
         config_dict=config_dict,
         grid_size=5,
-        n_workers=30,
+        n_workers=1,
     )
 
     # Fits 2D contours of dm31 and theta23 together
@@ -55,7 +53,7 @@ def main() -> None:
         run_name=run_name + "_2d",
         config_dict=config_dict,
         grid_size=5,
-        n_workers=30,
+        n_workers=1,
     )
 
 

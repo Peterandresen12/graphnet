@@ -385,11 +385,11 @@ class ContourFitter:
                 dm31_range=dm31_range,
                 n_workers=n_workers,
             )
-            p = multiprocessing.Pool(processes=len(settings))
-            _ = p.map_async(self._parallel_fit_1d_contour, settings)
-            p.close()
-            p.join()
-            # self._parallel_fit_1d_contour(settings[0])
+            # p = multiprocessing.Pool(processes=len(settings))
+            # _ = p.map_async(self._parallel_fit_1d_contour, settings)
+            # p.close()
+            # p.join()
+            self._parallel_fit_1d_contour(settings[0])
         elif contour_type.lower() == "2d":
             settings = self._make_2d_settings(
                 cfgs=cfgs,
